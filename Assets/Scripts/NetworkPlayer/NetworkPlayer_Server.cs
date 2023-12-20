@@ -6,6 +6,8 @@ using Random = UnityEngine.Random;
 public partial class NetworkPlayer {
     [Header("Player Movement")] [SerializeField]
     private float speed = 11f;
+    public bool activeGrapple = false;
+    public bool swinging = false;
 
     [SerializeField] private float jumpHeight = 3f;
     [SerializeField] private float gravity = -9.81f;
@@ -48,6 +50,12 @@ public partial class NetworkPlayer {
         _direction.y = (float)Math.Sqrt(-2f * jumpHeight * gravity);
     }
 
+    [Command]
+    public void Cmd_Freeze() {
+        if (!IsGrounded()) return;
+        Cmd_SetDirection(Vector2.zero);
+    }
+
     // [Server]
     // private void OnCollisionEnter(Collision other) {
     //     if (other.gameObject.CompareTag("Player")) {
@@ -75,5 +83,28 @@ public partial class NetworkPlayer {
         var bottomPoint = transform.TransformPoint(_characterController.center - Vector3.up * halfHeight);
         bool isGrounded = Physics.CheckSphere(bottomPoint, 0.1f, groundMask);
         return isGrounded;
+    }
+
+    [Server]
+    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
+    {
+        activeGrapple = true;
+
+        Cmd_SetDirection(CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight));
+        // Invoke(nameof(SetVelocity), 0.1f);
+    }
+
+    [Server]
+    private Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity) 
+            + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return velocityXZ + velocityY;
     }
 }

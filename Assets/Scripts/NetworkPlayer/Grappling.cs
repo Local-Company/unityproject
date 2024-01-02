@@ -42,8 +42,8 @@ public class Grappling : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (grappling)
-            lr.SetPosition(0, gunTip.position);
+        // if (grappling)
+            // lr.SetPosition(0, gunTip.position);
     }
 
     private void StartGrapple()
@@ -53,8 +53,6 @@ public class Grappling : MonoBehaviour
         GetComponent<SwingingDone>().StopSwing();
 
         grappling = true;
-
-        // pm_server.freeze = true; // -> Empecher le personnage de bouger
 
         RaycastHit hit;
         if(Physics.Raycast(cam.position, cam.forward, out hit, maxGrappleDistance, whatIsGrappleable))
@@ -71,13 +69,11 @@ public class Grappling : MonoBehaviour
         }
 
         lr.enabled = true;
-        lr.SetPosition(1, grapplePoint);
+        // lr.SetPosition(1, grapplePoint);
     }
 
     private void ExecuteGrapple()
     {
-        // pm_server.freeze = false; // -> Modifier le state du personnage
-
         Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
 
         float grapplePointRelativeYPos = grapplePoint.y - lowestPoint.y;
@@ -87,12 +83,12 @@ public class Grappling : MonoBehaviour
 
         pm_server.JumpToPosition(grapplePoint, highestPointOnArc);
 
-        Invoke(nameof(StopGrapple), 1f);
+        Invoke(nameof(StopGrapple), 0.1f);
     }
 
     public void StopGrapple()
     {
-        // pm_server.freeze = false;
+        // pm_server.Cmd_Freeze();
 
         grappling = false;
 

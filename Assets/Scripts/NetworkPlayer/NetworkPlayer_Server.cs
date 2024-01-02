@@ -42,6 +42,10 @@ public partial class NetworkPlayer {
         _direction = new Vector3(horizontalDirection.x, _direction.y, horizontalDirection.y);
 
     [Command]
+    private void Cmd_Set3dDirection(Vector3 grabPoint) =>
+        _direction = grabPoint;
+
+    [Command]
     private void Cmd_SetRotationY(float y) => _rotationY = y;
 
     [Command]
@@ -52,8 +56,10 @@ public partial class NetworkPlayer {
 
     [Command]
     public void Cmd_Freeze() {
-        if (!IsGrounded()) return;
+        Debug.Log("Deez NUTS");
         Cmd_SetDirection(Vector2.zero);
+        // Cmd_SetDirection(new Vector2(1,0));
+        Cmd_Set3dDirection(Vector3.zero);
     }
 
     // [Server]
@@ -90,8 +96,7 @@ public partial class NetworkPlayer {
     {
         activeGrapple = true;
 
-        Cmd_SetDirection(CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight));
-        // Invoke(nameof(SetVelocity), 0.1f);
+        Cmd_Set3dDirection(CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight));
     }
 
     [Server]

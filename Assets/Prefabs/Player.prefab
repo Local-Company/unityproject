@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 2750252707643550211}
   - component: {fileID: 5285098141392821731}
   - component: {fileID: -9104043059909434930}
+  - component: {fileID: -4386079117367428551}
+  - component: {fileID: 5283158495223300976}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -112,6 +114,8 @@ MonoBehaviour:
   sensitivityX: 8
   sensitivityY: 0.1
   speed: 8
+  activeGrapple: 0
+  swinging: 0
   jumpHeight: 2
   gravity: -9.81
   groundMask:
@@ -281,6 +285,57 @@ MonoBehaviour:
   compressRotation: 0
   positionPrecision: 0.01
   scalePrecision: 0.01
+--- !u!114 &-4386079117367428551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6937825766698615954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca97798209140ca45b7f4d22ba488692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 1538233745825676060}
+  gunTip: {fileID: 1538233745825676060}
+  whatIsGrappleable:
+    serializedVersion: 2
+    m_Bits: 8
+  lr: {fileID: 5393713951724531516, guid: 253922db4c5b4ea4a9ad27d0dbb3b2ec, type: 3}
+  maxGrappleDistance: 15
+  grappleDelayTime: 0.15
+  overshootYAxis: 2
+  grapplingCd: 1
+  grappleKey: 324
+--- !u!114 &5283158495223300976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6937825766698615954}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d4231e61785a154e8d2654a782ff829, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lr: {fileID: 5393713951724531516, guid: 253922db4c5b4ea4a9ad27d0dbb3b2ec, type: 3}
+  gunTip: {fileID: 1538233745825676060}
+  cam: {fileID: 1538233745825676060}
+  player: {fileID: 1538233745825676060}
+  whatIsGrappleable:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  pm_server: {fileID: 4433540983005760893}
+  orientation: {fileID: 0}
+  rb: {fileID: 0}
+  horizontalThrustForce: 0
+  forwardThrustForce: 0
+  extendCableSpeed: 0
+  predictionSphereCastRadius: 0
+  predictionPoint: {fileID: 0}
+  swingKey: 323
 --- !u!1 &8345636848882438452
 GameObject:
   m_ObjectHideFlags: 0

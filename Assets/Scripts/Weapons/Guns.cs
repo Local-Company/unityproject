@@ -1,19 +1,22 @@
+using System;
+using JetBrains.Annotations;
 using Mirror;
 using UnityEngine;
 using Quaternion = System.Numerics.Quaternion;
 
-[RequireComponent(typeof(NetworkIdentity))]
+[RequireComponent(typeof(NetworkIdentity)), RequireComponent(typeof(AudioSource))]
 public class Guns : NetworkBehaviour {
     [Header("Bullet")] [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletSpeed = 100f;
     [SerializeField] private float bulletLifeTime = 5f;
     [SerializeField] private int bulletDamage = 10;
     [SerializeField] private bool bulletBounce;
+    [SerializeField] private AudioClip audioClip;
+
 
     [Header("Gun")] [SerializeField] private float fireRate = 1f;
     [SerializeField] private float reloadTime = 1f;
     [SerializeField] private int magazineSize = 10;
-    [SerializeField] private int maxAmmo = 100;
     [SerializeField] private int currentAmmo = 100;
     [SerializeField] private bool isAutomatic;
     private int _currentMagazine;
@@ -21,10 +24,15 @@ public class Guns : NetworkBehaviour {
     private bool _isFiring;
 
     private GameObject _shootPoint;
+    private AudioSource _audioSource;
+    private WeaponHandler _weaponHandler;
 
     private void Start() {
         _shootPoint = transform.Find("ShootPoint").gameObject;
         _currentMagazine = magazineSize;
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource) _audioSource.spatialBlend = 1;
+        _weaponHandler = transform.parent.gameObject.GetComponent<WeaponHandler>();
     }
 
     private new void OnValidate() {
@@ -73,8 +81,17 @@ public class Guns : NetworkBehaviour {
             bulletBehaviour.OnCollision += OnBulletCollision;
         }
 
+        Debug.Log("Shoot");
         NetworkServer.Spawn(bulletGo);
         Destroy(bulletGo, bulletLifeTime);
+        _weaponHandler.CMD_ShootAudio();
+    }
+
+    [Client]
+    public void ShootAudio(){
+        Debug.Log("ShootAudio");
+        if (_audioSource && audioClip)
+            _audioSource.PlayOneShot(audioClip);
     }
 
     [Server]

@@ -71,6 +71,24 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroll Up"",
+                    ""type"": ""Value"",
+                    ""id"": ""3da998d2-9867-425f-972a-eea014cadb42"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Scroll Down"",
+                    ""type"": ""Value"",
+                    ""id"": ""25f308ec-9cef-4dd6-9d01-534e92cbd3eb"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -172,6 +190,28 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""action"": ""MouseY"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc1d8cee-e4d8-4e49-b342-7a55cc2f9037"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14238450-99ed-4466-af1e-dd22acc38e24"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -185,6 +225,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_GroundMovement_Shoot = m_GroundMovement.FindAction("Shoot", throwIfNotFound: true);
         m_GroundMovement_MouseX = m_GroundMovement.FindAction("MouseX", throwIfNotFound: true);
         m_GroundMovement_MouseY = m_GroundMovement.FindAction("MouseY", throwIfNotFound: true);
+        m_GroundMovement_ScrollUp = m_GroundMovement.FindAction("Scroll Up", throwIfNotFound: true);
+        m_GroundMovement_ScrollDown = m_GroundMovement.FindAction("Scroll Down", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -251,6 +293,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_GroundMovement_Shoot;
     private readonly InputAction m_GroundMovement_MouseX;
     private readonly InputAction m_GroundMovement_MouseY;
+    private readonly InputAction m_GroundMovement_ScrollUp;
+    private readonly InputAction m_GroundMovement_ScrollDown;
     public struct GroundMovementActions
     {
         private @PlayerControl m_Wrapper;
@@ -260,6 +304,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_GroundMovement_Shoot;
         public InputAction @MouseX => m_Wrapper.m_GroundMovement_MouseX;
         public InputAction @MouseY => m_Wrapper.m_GroundMovement_MouseY;
+        public InputAction @ScrollUp => m_Wrapper.m_GroundMovement_ScrollUp;
+        public InputAction @ScrollDown => m_Wrapper.m_GroundMovement_ScrollDown;
         public InputActionMap Get() { return m_Wrapper.m_GroundMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -284,6 +330,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @MouseY.started += instance.OnMouseY;
             @MouseY.performed += instance.OnMouseY;
             @MouseY.canceled += instance.OnMouseY;
+            @ScrollUp.started += instance.OnScrollUp;
+            @ScrollUp.performed += instance.OnScrollUp;
+            @ScrollUp.canceled += instance.OnScrollUp;
+            @ScrollDown.started += instance.OnScrollDown;
+            @ScrollDown.performed += instance.OnScrollDown;
+            @ScrollDown.canceled += instance.OnScrollDown;
         }
 
         private void UnregisterCallbacks(IGroundMovementActions instance)
@@ -303,6 +355,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @MouseY.started -= instance.OnMouseY;
             @MouseY.performed -= instance.OnMouseY;
             @MouseY.canceled -= instance.OnMouseY;
+            @ScrollUp.started -= instance.OnScrollUp;
+            @ScrollUp.performed -= instance.OnScrollUp;
+            @ScrollUp.canceled -= instance.OnScrollUp;
+            @ScrollDown.started -= instance.OnScrollDown;
+            @ScrollDown.performed -= instance.OnScrollDown;
+            @ScrollDown.canceled -= instance.OnScrollDown;
         }
 
         public void RemoveCallbacks(IGroundMovementActions instance)
@@ -327,5 +385,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnMouseX(InputAction.CallbackContext context);
         void OnMouseY(InputAction.CallbackContext context);
+        void OnScrollUp(InputAction.CallbackContext context);
+        void OnScrollDown(InputAction.CallbackContext context);
     }
 }

@@ -31,6 +31,8 @@ public partial class NetworkPlayer {
         _groundMovementActions.Shoot.canceled += (ctx) => _weaponHandler.CMD_StopShooting();
         _groundMovementActions.MouseX.performed += (ctx) => RotatePlayerX(ctx.ReadValue<float>(), 0f);
         _groundMovementActions.MouseY.performed += (ctx) => RotatePlayerX(0f, ctx.ReadValue<float>());
+        _groundMovementActions.ScrollUp.performed += (ctx) => _weaponHandler.CMD_ChangeWeaponUp();
+        _groundMovementActions.ScrollDown.performed += (ctx) => _weaponHandler.CMD_ChangeWeaponDown();
     }
 
     [Client]

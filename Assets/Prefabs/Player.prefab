@@ -605,6 +605,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   weaponsPrefab:
+  - {fileID: 4723379136095216082, guid: fe781dd6651be494691ecf3a40f9a49e, type: 3}
   - {fileID: 4723379136095216082, guid: 585430daee94c9e4a884fd1c9fa6adf1, type: 3}
   - {fileID: 4723379136095216082, guid: 4379dae36c9843a40806a3526e19cb2d, type: 3}
   - {fileID: 4723379136095216082, guid: 48ad00e6f6b627c42bd976ab9cd5e744, type: 3}

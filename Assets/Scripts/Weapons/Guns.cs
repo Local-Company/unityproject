@@ -81,7 +81,6 @@ public class Guns : NetworkBehaviour {
             bulletBehaviour.OnCollision += OnBulletCollision;
         }
 
-        Debug.Log("Shoot");
         NetworkServer.Spawn(bulletGo);
         Destroy(bulletGo, bulletLifeTime);
         _weaponHandler.CMD_ShootAudio();
@@ -89,7 +88,6 @@ public class Guns : NetworkBehaviour {
 
     [Client]
     public void ShootAudio(){
-        Debug.Log("ShootAudio");
         if (_audioSource && audioClip)
             _audioSource.PlayOneShot(audioClip);
     }

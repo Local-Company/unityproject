@@ -83,12 +83,12 @@ public class Grappling : MonoBehaviour
 
         pm_server.JumpToPosition(grapplePoint, highestPointOnArc);
 
-        Invoke(nameof(StopGrapple), 0.1f);
+        Invoke(nameof(StopGrapple), 0.5f);
     }
 
     public void StopGrapple()
     {
-        // pm_server.Cmd_Freeze();
+        pm_server.Cmd_Freeze();
 
         grappling = false;
 

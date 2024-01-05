@@ -1,6 +1,8 @@
 using Mirror;
 using TMPro;
 using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
 
 public partial class NetworkPlayer {
     private PlayerControl _playerControl;
@@ -8,9 +10,12 @@ public partial class NetworkPlayer {
 
     [Header("Player Movement")] [SerializeField]
     private float sensitivityX = 8f;
-    [SerializeField] private float sensitivityY = 0.1f;
+    [SerializeField] private float sensitivityY = 0.5f;
 
     private float _cameraRotationY;
+
+    [SerializeField] private GameObject HealthBar;
+    [SerializeField] private Scrollbar ScrollHpBar;
 
     [Client]
     public override void OnStartAuthority() {
@@ -53,6 +58,15 @@ public partial class NetworkPlayer {
     [Client]
     private void OnHealthUpdate(int oldHealth, int newHealth) {
         if (isOwned) Debug.Log("I have " + newHealth + " health.");
+        ScrollHpBar.size = newHealth / 100;
+        StartCoroutine(DisplayUpdate(newHealth));
+    }
+
+    [Client]
+    private IEnumerator DisplayUpdate(int health) {
+        yield return new WaitForSeconds(0.5f);
+        if (health == 100)
+            HealthBar.SetActive(false);
     }
 
     [TargetRpc]

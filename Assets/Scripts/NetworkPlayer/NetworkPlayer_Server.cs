@@ -15,6 +15,7 @@ public partial class NetworkPlayer {
     [SerializeField] private LayerMask groundMask;
 
     [SerializeField] [SyncVar(hook = nameof(OnHealthUpdate))]
+    
     private int playerHealth = 100;
 
     [SyncVar(hook = nameof(OnNameUpdate))] private string playerName = "NO_NAME";
@@ -56,10 +57,8 @@ public partial class NetworkPlayer {
 
     [Command]
     public void Cmd_Freeze() {
-        Debug.Log("Deez NUTS");
-        Cmd_SetDirection(Vector2.zero);
-        // Cmd_SetDirection(new Vector2(1,0));
-        Cmd_Set3dDirection(Vector3.zero);
+        Cmd_SetDirection(new Vector2(0,0)); // -> ici: Rajouter une petite propulsion en avant?
+        // Cmd_Set3dDirection(Vector3.zero);
     }
 
     // [Server]

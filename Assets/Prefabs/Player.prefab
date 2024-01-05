@@ -108,7 +108,7 @@ RectTransform:
   m_Father: {fileID: 5391054584088691023}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -440,7 +440,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6451274205302112505
 RectTransform:
   m_ObjectHideFlags: 0
@@ -675,7 +675,7 @@ MonoBehaviour:
   sensitivityX: 8
   sensitivityY: 0.1
   HealthBar: {fileID: 6130972720080365395}
-  ScrollHpBar: {fileID: 0}
+  ScrollHpBar: {fileID: 8609472013878181212}
   speed: 8
   activeGrapple: 0
   swinging: 0

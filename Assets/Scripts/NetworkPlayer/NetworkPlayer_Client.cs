@@ -60,7 +60,8 @@ public partial class NetworkPlayer {
     [Client]
     private void OnHealthUpdate(int oldHealth, int newHealth) {
         if (isOwned) Debug.Log("I have " + newHealth + " health.");
-        ScrollHpBar.size = newHealth / 100;
+        if (ScrollHpBar)
+            ScrollHpBar.size = newHealth / 100;
         StartCoroutine(DisplayUpdate(newHealth));
     }
 

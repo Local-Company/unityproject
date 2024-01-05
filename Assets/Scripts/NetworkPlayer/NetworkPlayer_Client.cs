@@ -2,6 +2,7 @@ using Mirror;
 using TMPro;
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine.UI;
 
 public partial class NetworkPlayer {
@@ -38,6 +39,12 @@ public partial class NetworkPlayer {
         _groundMovementActions.MouseY.performed += (ctx) => RotatePlayerX(0f, ctx.ReadValue<float>());
         _groundMovementActions.ScrollUp.performed += (ctx) => _weaponHandler.CMD_ChangeWeaponUp();
         _groundMovementActions.ScrollDown.performed += (ctx) => _weaponHandler.CMD_ChangeWeaponDown();
+    }
+
+    [Client]
+    public override void OnStopAuthority() {
+        _playerControl.Disable();
+        _groundMovementActions.Disable();
     }
 
     [Client]

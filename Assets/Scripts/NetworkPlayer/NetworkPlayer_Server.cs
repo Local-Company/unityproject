@@ -39,9 +39,16 @@ public partial class NetworkPlayer {
     public void SetName(string newName) => playerName = newName;
 
     [Command]
-    private void Cmd_SetDirection(Vector2 horizontalDirection) =>
-        _direction = new Vector3(horizontalDirection.x, _direction.y, horizontalDirection.y);
+    private void Cmd_SetDirection(Vector2 horizontalDirection)
+    {
+        bool isPaused = GameObject.FindGameObjectWithTag("Event").GetComponent<PauseMenu>().isPaused;
 
+        if (isPaused == false)
+        {
+            _direction = new Vector3(horizontalDirection.x, _direction.y, horizontalDirection.y);
+        }
+    }
+    
     [Command]
     private void Cmd_Set3dDirection(Vector3 grabPoint) =>
         _direction = grabPoint;
@@ -51,7 +58,9 @@ public partial class NetworkPlayer {
 
     [Command]
     private void Cmd_Jump() {
-        if (!IsGrounded()) return;
+        bool isPaused = GameObject.FindGameObjectWithTag("Event").GetComponent<PauseMenu>().isPaused;
+
+        if (!IsGrounded() || isPaused == true) return;
         _direction.y = (float)Math.Sqrt(-2f * jumpHeight * gravity);
     }
 

@@ -42,13 +42,19 @@ public partial class NetworkPlayer {
 
     [Client]
     private void RotatePlayerX(float mouseDeltaX, float mouseDeltaY) {
-        transform.Rotate(Vector3.up, mouseDeltaX * sensitivityX * Time.deltaTime);
+            
+        bool isPaused = GameObject.FindGameObjectWithTag("Event").GetComponent<PauseMenu>().isPaused;
 
-        _cameraRotationY -= mouseDeltaY * sensitivityY;
-        _cameraRotationY = Mathf.Clamp(_cameraRotationY, -85f, 85f);
-        Cmd_SetRotationY(_cameraRotationY);
-        _rotationYObject.transform.SetLocalPositionAndRotation(_rotationYObject.transform.localPosition,
-            Quaternion.Euler(_cameraRotationY, 0f, 0f));
+        if (isPaused != true)
+        {
+            transform.Rotate(Vector3.up, mouseDeltaX * sensitivityX * Time.deltaTime);
+
+            _cameraRotationY -= mouseDeltaY * sensitivityY;
+            _cameraRotationY = Mathf.Clamp(_cameraRotationY, -85f, 85f);
+            Cmd_SetRotationY(_cameraRotationY);
+            _rotationYObject.transform.SetLocalPositionAndRotation(_rotationYObject.transform.localPosition,
+                Quaternion.Euler(_cameraRotationY, 0f, 0f));
+        }
     }
 
     [Client]

@@ -4,6 +4,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 public partial class NetworkPlayer : NetworkBehaviour {
+
+
     private readonly Logger.ILogger _logger = Logger.Logger.createLogger();
 
     private CharacterController _characterController;

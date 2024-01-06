@@ -13,13 +13,11 @@ public class waitandgo : MonoBehaviour
         {
             if(GameObject.FindGameObjectsWithTag("Player").Length <= 1)
             {
-                wait = false;
-                GameObject.FindGameObjectWithTag("Event").GetComponent<PauseMenu>().isPaused = false;
+                wait = true;
             }
             else
             {
                 wait = false;
-                GameObject.FindGameObjectWithTag("Event").GetComponent<PauseMenu>().isPaused = false;
             }
             iwait();
         }

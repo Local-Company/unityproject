@@ -106,6 +106,7 @@ public class Guns : NetworkBehaviour {
             if (collision.gameObject.TryGetComponent<NetworkIdentity>(out var networkIdentity)) {
                 if (networkIdentity.gameObject.TryGetComponent<NetworkPlayer>(out var networkPlayer)) {
                     networkPlayer.ReduceHealth(bulletDamage);
+                    Debug.Log("je suis touché");
                     GameObject.FindGameObjectWithTag("Event").GetComponent<comboANDscore>().ResetCombo();
                     NetworkServer.Destroy(bullet.gameObject);
                 }

@@ -8,6 +8,7 @@ TagManager:
   - JoinIp
   - Event
   - Score
+  - Wait
   layers:
   - Default
   - TransparentFX

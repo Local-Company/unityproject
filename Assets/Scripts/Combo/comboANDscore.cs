@@ -12,6 +12,23 @@ public class comboANDscore : MonoBehaviour
         score = 0;
     }
 
+    void Update()
+    {
+
+        bool w8 = GameObject.FindGameObjectWithTag("Event").GetComponent<waitandgo>().wait;
+
+        if(w8 == false)
+        {
+            gamestart();
+        }
+    }
+
+    public void gamestart()
+    {
+        InvokeRepeating("AddScore", 2f, 2f);
+        InvokeRepeating("MoreCombo", 5f, 5f);
+    }
+
     public int GetScore()
     {
         return score;

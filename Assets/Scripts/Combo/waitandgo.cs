@@ -13,29 +13,19 @@ public class waitandgo : MonoBehaviour
         {
             if(GameObject.FindGameObjectsWithTag("Player").Length <= 1)
             {
+                GameObject scoreTextObject = GameObject.FindGameObjectWithTag("Wait");
+                TextMeshProUGUI tmp = scoreTextObject.GetComponent<TextMeshProUGUI>();
+                tmp.text = "waiting for other players";
                 wait = true;
             }
             else
             {
+                GameObject scoreTextObject = GameObject.FindGameObjectWithTag("Wait");
+                TextMeshProUGUI tmp = scoreTextObject.GetComponent<TextMeshProUGUI>();
+                tmp.text = "";
                 wait = false;
             }
-            iwait();
         }
     }
 
-    public void iwait()
-    {
-        if (wait == true)
-        {
-            GameObject scoreTextObject = GameObject.FindGameObjectWithTag("Wait");
-            TextMeshProUGUI tmp = scoreTextObject.GetComponent<TextMeshProUGUI>();
-            tmp.text = "waiting for other players";
-        }
-        else
-        {
-            GameObject scoreTextObject = GameObject.FindGameObjectWithTag("Wait");
-            TextMeshProUGUI tmp = scoreTextObject.GetComponent<TextMeshProUGUI>();
-            tmp.text = "";
-        }
-    }
 }

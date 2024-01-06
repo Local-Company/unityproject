@@ -5,7 +5,7 @@ using TMPro;
 
 public class waitandgo : MonoBehaviour
 {
-    public bool wait = true;
+    public bool wait = false;
 
     void Update()
     {

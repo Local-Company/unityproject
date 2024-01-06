@@ -25,8 +25,8 @@ public class comboANDscore : MonoBehaviour
 
     public void gamestart()
     {
-        InvokeRepeating("AddScore", 2f, 2f);
-        InvokeRepeating("MoreCombo", 5f, 5f);
+        InvokeRepeating("AddScore", 5f, 5f);
+        InvokeRepeating("MoreCombo", 15f, 15f);
     }
 
     public int GetScore()
@@ -58,7 +58,7 @@ public class comboANDscore : MonoBehaviour
 
     public void AddScore()
     {
-        score = 1 * actualCombo;   
+        score += 1 * actualCombo;   
     }
     
     public void ResetScore()

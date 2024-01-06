@@ -29,7 +29,6 @@ public class comboANDscore : MonoBehaviour
         prout = true;
         InvokeRepeating("AddScore", 5f, 5f);
         InvokeRepeating("MoreCombo", 15f, 15f);
-        
     }
 
     public int GetScore()

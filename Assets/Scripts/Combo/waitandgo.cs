@@ -5,7 +5,7 @@ using TMPro;
 
 public class waitandgo : MonoBehaviour
 {
-    public bool wait = true;
+    public bool wait = false;
 
     void Update()
     {
@@ -13,8 +13,8 @@ public class waitandgo : MonoBehaviour
         {
             if(GameObject.FindGameObjectsWithTag("Player").Length <= 1)
             {
-                wait = true;
-                GameObject.FindGameObjectWithTag("Event").GetComponent<PauseMenu>().isPaused = true;
+                wait = false;
+                GameObject.FindGameObjectWithTag("Event").GetComponent<PauseMenu>().isPaused = false;
             }
             else
             {

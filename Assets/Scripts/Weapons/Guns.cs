@@ -64,7 +64,9 @@ public class Guns : NetworkBehaviour {
 
     [Server]
     public void Shoot() {
-        if (_isReloading || _isFiring) return;
+        bool isPaused = GameObject.FindGameObjectWithTag("Event").GetComponent<PauseMenu>().isPaused;
+
+        if (_isReloading || _isFiring || isPaused) return;
         if (_currentMagazine <= 0) {
             Reload();
             return;

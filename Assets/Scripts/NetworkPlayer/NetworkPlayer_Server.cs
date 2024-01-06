@@ -6,6 +6,8 @@ using Random = UnityEngine.Random;
 public partial class NetworkPlayer {
     [Header("Player Movement")] [SerializeField]
     private float speed = 11f;
+    public bool activeGrapple = false;
+    public bool swinging = false;
 
     [SerializeField] private float jumpHeight = 3f;
     [SerializeField] private float gravity = -9.81f;
@@ -13,6 +15,7 @@ public partial class NetworkPlayer {
     [SerializeField] private LayerMask groundMask;
 
     [SerializeField] [SyncVar(hook = nameof(OnHealthUpdate))]
+    
     private int playerHealth = 100;
 
     [SyncVar(hook = nameof(OnNameUpdate))] private string playerName = "NO_NAME";
@@ -36,16 +39,35 @@ public partial class NetworkPlayer {
     public void SetName(string newName) => playerName = newName;
 
     [Command]
-    private void Cmd_SetDirection(Vector2 horizontalDirection) =>
-        _direction = new Vector3(horizontalDirection.x, _direction.y, horizontalDirection.y);
+    private void Cmd_SetDirection(Vector2 horizontalDirection)
+    {
+        bool isPaused = GameObject.FindGameObjectWithTag("Event").GetComponent<PauseMenu>().isPaused;
+
+        if (isPaused == false)
+        {
+            _direction = new Vector3(horizontalDirection.x, _direction.y, horizontalDirection.y);
+        }
+    }
+    
+    [Command]
+    private void Cmd_Set3dDirection(Vector3 grabPoint) =>
+        _direction = grabPoint;
 
     [Command]
     private void Cmd_SetRotationY(float y) => _rotationY = y;
 
     [Command]
     private void Cmd_Jump() {
-        if (!IsGrounded()) return;
+        bool isPaused = GameObject.FindGameObjectWithTag("Event").GetComponent<PauseMenu>().isPaused;
+
+        if (!IsGrounded() || isPaused == true) return;
         _direction.y = (float)Math.Sqrt(-2f * jumpHeight * gravity);
+    }
+
+    [Command]
+    public void Cmd_Freeze() {
+        Cmd_SetDirection(new Vector2(0,0)); // -> ici: Rajouter une petite propulsion en avant?
+        // Cmd_Set3dDirection(Vector3.zero);
     }
 
     // [Server]
@@ -75,5 +97,27 @@ public partial class NetworkPlayer {
         var bottomPoint = transform.TransformPoint(_characterController.center - Vector3.up * halfHeight);
         bool isGrounded = Physics.CheckSphere(bottomPoint, 0.1f, groundMask);
         return isGrounded;
+    }
+
+    [Server]
+    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
+    {
+        activeGrapple = true;
+
+        Cmd_Set3dDirection(CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight));
+    }
+
+    [Server]
+    private Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity) 
+            + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return velocityXZ + velocityY;
     }
 }

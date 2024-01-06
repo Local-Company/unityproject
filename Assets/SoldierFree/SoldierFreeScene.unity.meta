@@ -1,15 +1,7 @@
 fileFormatVersion: 2
 guid: 5234353ad1237044089271ce6176323e
-timeCreated: 1470838472
-licenseType: Store
 DefaultImporter:
+  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 69269
-  packageName: LowPoly Soldier
-  packageVersion: 1.0
-  assetPath: Assets/SoldierFree/SoldierFreeScene.unity
-  uploadId: 131776

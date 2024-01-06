@@ -17,9 +17,9 @@ public class Guns : NetworkBehaviour {
     [Header("Gun")] [SerializeField] private float fireRate = 1f;
     [SerializeField] private float reloadTime = 1f;
     [SerializeField] private int magazineSize = 10;
-    [SerializeField] private int currentAmmo = 100;
+    [SerializeField] public int currentAmmo = 100;
     [SerializeField] private bool isAutomatic;
-    private int _currentMagazine;
+    public int _currentMagazine;
     private bool _isReloading;
     private bool _isFiring;
 

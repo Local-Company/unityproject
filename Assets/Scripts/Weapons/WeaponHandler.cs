@@ -10,7 +10,7 @@ public class WeaponHandler : NetworkBehaviour {
     private int _currentWeaponIndex;
 
     [CanBeNull] private GameObject _currentWeapon;
-    [CanBeNull] private Guns _currentWeaponGuns;
+    [CanBeNull] public Guns _currentWeaponGuns;
 
     private new void OnValidate() {
         if (weaponsPrefab.Count == 0) Debug.LogError("No weapons in the list");

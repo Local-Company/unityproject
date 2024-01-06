@@ -2,7 +2,6 @@ using Mirror;
 using TMPro;
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine.UI;
 
 public partial class NetworkPlayer {
@@ -90,4 +89,12 @@ public partial class NetworkPlayer {
         Debug.Log("We had a collision with " + nbr);
         Debug.Log("I have " + playerHealth + " health.");
     }
+
+    [Client]
+    private void GetPlayerWeapons() {
+        if (_weaponHandler._currentWeaponGuns == null) return;
+        int magazine = _weaponHandler._currentWeaponGuns._currentMagazine;
+        int ammo = _weaponHandler._currentWeaponGuns.currentAmmo;
+    }
+
 }

@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 public class Grappling : MonoBehaviour
 {
-    [Header("References")]
     private NetworkPlayer pm_server;
-    public Transform cam;
-    public Transform gunTip;
     public LayerMask whatIsGrappleable;
     public LineRenderer lr;
 
@@ -31,10 +29,14 @@ public class Grappling : MonoBehaviour
     {
         pm_server = GetComponent<NetworkPlayer>();
     }
-
+    
+    [Client]
     private void Update()
     {
         if (Input.GetKeyDown(grappleKey)) StartGrapple();
+
+        Camera cam = Camera.main;
+        Debug.DrawRay(cam.transform.position, cam.transform.forward * maxGrappleDistance, Color.red);
 
         if (grapplingCdTimer > 0)
             grapplingCdTimer -= Time.deltaTime;
@@ -46,6 +48,7 @@ public class Grappling : MonoBehaviour
             // lr.SetPosition(0, gunTip.position);
     }
 
+    [Client]
     private void StartGrapple()
     {
         if (grapplingCdTimer > 0) return;
@@ -54,18 +57,16 @@ public class Grappling : MonoBehaviour
 
         grappling = true;
 
-        RaycastHit hit;
-        if(Physics.Raycast(cam.position, cam.forward, out hit, maxGrappleDistance, whatIsGrappleable))
-        {
+        Camera cam = Camera.main;
+        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, maxGrappleDistance, whatIsGrappleable)) {
             grapplePoint = hit.point;
+            Debug.Log(grapplePoint);
 
             Invoke(nameof(ExecuteGrapple), grappleDelayTime);
-        }
-        else
-        {
-            grapplePoint = cam.position + cam.forward * maxGrappleDistance;
+        } else {
+            //grapplePoint = cam.transform.position + cam.transform.forward * maxGrappleDistance;
 
-            Invoke(nameof(StopGrapple), grappleDelayTime);
+            //Invoke(nameof(StopGrapple), grappleDelayTime);
         }
 
         lr.enabled = true;
@@ -95,15 +96,5 @@ public class Grappling : MonoBehaviour
         grapplingCdTimer = grapplingCd;
 
         lr.enabled = false;
-    }
-
-    public bool IsGrappling()
-    {
-        return grappling;
-    }
-
-    public Vector3 GetGrapplePoint()
-    {
-        return grapplePoint;
     }
 }

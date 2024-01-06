@@ -860,8 +860,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca97798209140ca45b7f4d22ba488692, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 1538233745825676060}
-  gunTip: {fileID: 1538233745825676060}
   whatIsGrappleable:
     serializedVersion: 2
     m_Bits: 13
@@ -1643,6 +1641,7 @@ MonoBehaviour:
   - {fileID: 4723379136095216082, guid: 4379dae36c9843a40806a3526e19cb2d, type: 3}
   - {fileID: 4723379136095216082, guid: 48ad00e6f6b627c42bd976ab9cd5e744, type: 3}
   - {fileID: 4723379136095216082, guid: 7fbc62f5eec00ff40a7de5c0fc1de70d, type: 3}
+  _currentWeaponGuns: {fileID: 0}
 --- !u!4 &6212019632856972417 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8381079077520799568, guid: 6d2b92c7baa178349b348568b93dcaf1, type: 3}

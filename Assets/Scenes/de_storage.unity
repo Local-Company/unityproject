@@ -12434,6 +12434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083e4944742cf0947bdfbe6419c5db5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prout: 0
   score: 0
   actualCombo: 1
 --- !u!114 &1078633306

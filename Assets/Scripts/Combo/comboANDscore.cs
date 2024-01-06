@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class comboANDscore : MonoBehaviour
 {
+    public bool prout = false;
     public int score = 0;
     public int actualCombo = 1;
 
@@ -17,7 +18,7 @@ public class comboANDscore : MonoBehaviour
 
         bool w8 = GameObject.FindGameObjectWithTag("Event").GetComponent<waitandgo>().wait;
 
-        if(w8 == false)
+        if(w8 == false && prout == false)
         {
             gamestart();
         }
@@ -25,8 +26,10 @@ public class comboANDscore : MonoBehaviour
 
     public void gamestart()
     {
+        prout = true;
         InvokeRepeating("AddScore", 5f, 5f);
         InvokeRepeating("MoreCombo", 15f, 15f);
+        
     }
 
     public int GetScore()

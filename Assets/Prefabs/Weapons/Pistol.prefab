@@ -308,6 +308,7 @@ MonoBehaviour:
   magazineSize: 12
   currentAmmo: 100
   isAutomatic: 0
+  _currentMagazine: 0
 --- !u!114 &6559944605640759607
 MonoBehaviour:
   m_ObjectHideFlags: 0
